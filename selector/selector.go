@@ -1,3 +1,5 @@
+// Package selector implements gomemcached ServerSelector interface
+// with consistent hashing as strategy for distribution of keys across servers.
 package selector
 
 import (
