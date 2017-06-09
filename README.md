@@ -4,7 +4,10 @@ Provides a ServerSelector interface implementation for picking the next server.
 It is safe for conurrent use by multiple go routines.
 It uses consistent hashing strategy to distribute keys across nodes
 
+This is just an experimental implementation.
+Although it should work, package was not tested in production, so please use with care if intending to use it.
+
 # Inspired by
 
-* gomemcached client
-* consistent by StatHat
+* [gomemcached client](https://github.com/bradfitz/gomemcache)
+* [consistent by StatHat](https://github.com/stathat/consistent)

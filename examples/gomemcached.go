@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	// Assumes you have started these instances locally
 	sl := selector.NewServerList()
 	sl.Add("0.0.0.0:11211")
 	sl.Add("0.0.0.0:11212")
