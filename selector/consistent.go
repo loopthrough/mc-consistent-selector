@@ -71,6 +71,9 @@ func (ch *ConsistentHash) Remove(server net.Addr) {
 
 // PickForKey returns the value for key that ensures consistent distribution
 func (ch *ConsistentHash) PickForKey(key string) (net.Addr, error) {
+	ch.mu.RLock()
+	defer ch.mu.RUnlock()
+
 	if ch.circle.Size() == 0 {
 		return nil, ErrNoNodes
 	}
