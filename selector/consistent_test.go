@@ -9,14 +9,14 @@ import (
 )
 
 func TestAdd(t *testing.T) {
-	ch := NewWith(20)
+	ch := NewConsistentHashWith(20)
 	ch.Add(&addrValue{"tcp", "127.0.0.1:11211"})
 
 	assert.Equal(t, 20, ch.circle.Size())
 }
 
 func TestRemove(t *testing.T) {
-	ch := NewWith(20)
+	ch := NewConsistentHashWith(20)
 
 	ch.Add(&addrValue{"tcp", "127.0.0.1:11211"})
 	assert.Equal(t, 20, ch.circle.Size())
@@ -26,7 +26,7 @@ func TestRemove(t *testing.T) {
 }
 
 func TestPickServer1Server(t *testing.T) {
-	ch := NewWith(20)
+	ch := NewConsistentHashWith(20)
 	server := &addrValue{"tcp", "127.0.0.1:11211"}
 	ch.Add(server)
 
@@ -39,7 +39,7 @@ func TestDistributeAccrossServers(t *testing.T) {
 	server1 := &addrValue{"tcp", "127.0.0.1:11211"}
 	server2 := &addrValue{"tcp", "127.0.0.2:11211"}
 	server3 := &addrValue{"tcp", "127.0.0.3:11211"}
-	ch := New()
+	ch := NewConsistentHash()
 	ch.Add(server1)
 	ch.Add(server2)
 	ch.Add(server3)

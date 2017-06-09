@@ -12,6 +12,12 @@ type ServerList struct {
 	consistentHash *ConsistentHash
 }
 
+func NewServerList() *ServerList {
+	return &ServerList{
+		consistentHash: NewConsistentHash(),
+	}
+}
+
 // addrVal is static storage for values provided as net.Addr.
 // It implements the same interface as net.Addr
 type addrValue struct {

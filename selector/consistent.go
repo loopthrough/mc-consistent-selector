@@ -20,14 +20,14 @@ type ConsistentHash struct {
 	nodes         []string
 }
 
-func New() *ConsistentHash {
+func NewConsistentHash() *ConsistentHash {
 	return &ConsistentHash{
 		circle:        treemap.NewWithIntComparator(),
 		pointsPerNode: 100, // 100 for decent distribution
 	}
 }
 
-func NewWith(pointsPerNode int) *ConsistentHash {
+func NewConsistentHashWith(pointsPerNode int) *ConsistentHash {
 	return &ConsistentHash{
 		circle:        treemap.NewWithIntComparator(),
 		pointsPerNode: pointsPerNode,
