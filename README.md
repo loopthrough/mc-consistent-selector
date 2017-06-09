@@ -3,3 +3,8 @@
 Provides a ServerSelector interface implementation for picking the next server.
 It is safe for conurrent use by multiple go routines.
 It uses consistent hashing strategy to distribute keys across nodes
+
+# Inspired by
+
+* gomemcached client
+* consistent by StatHat
