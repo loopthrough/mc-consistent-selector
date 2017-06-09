@@ -49,7 +49,7 @@ func (sl *ServerList) Add(server string) error {
 	sl.mu.Lock()
 	defer sl.mu.Unlock()
 	sl.servers = append(sl.servers, serverAddress)
-	sl.consistentHash.Add(serverAddress.String())
+	sl.consistentHash.Add(serverAddress)
 	return nil
 }
 
@@ -64,10 +64,18 @@ func (sl *ServerList) Clear() {
 func (sl *ServerList) Each(f func(net.Addr) error) error {
 	sl.mu.RLock()
 	defer sl.mu.RUnlock()
+
 	for _, a := range sl.servers {
 		if err := f(a); nil != err {
 			return err
 		}
 	}
 	return nil
+}
+
+func (sl *ServerList) PickServer(key string) (net.Addr, error) {
+	sl.mu.RLock()
+	defer sl.mu.RUnlock()
+
+	return sl.consistentHash.PickForKey(key)
 }
