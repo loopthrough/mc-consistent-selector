@@ -13,6 +13,7 @@ var (
 )
 
 type ConsistentHash struct {
+	mu            sync.RWMutex
 	circle        *treemap.Map
 	pointsPerNode int
 	nodes         []string
@@ -21,7 +22,7 @@ type ConsistentHash struct {
 func New() *ConsistentHash {
 	return &ConsistentHash{
 		circle:        treemap.NewWithIntComparator(),
-		pointsPerNode: 150,
+		pointsPerNode: 100, // 100 for decent distribution
 	}
 }
 
@@ -48,8 +49,22 @@ func indexedKeyHash(key string, index int) uint32 {
 
 // Add inserts points in the circle for the provided server
 func (ch *ConsistentHash) Add(server string) {
+	ch.mu.Lock()
+	defer ch.mu.Unlock()
 	for i := 0; i < ch.pointsPerNode; i++ {
-		ch.circle.Put(indexedKeyHash(server, i), server)
+		ch.circle.Put(
+			int(indexedKeyHash(server, i)), // cast for TreeMap comparisons
+			server)
+	}
+}
+
+// Remove removes points in the circle for the provided server
+func (ch *ConsistentHash) Remove(server string) {
+	ch.mu.Lock()
+	defer ch.mu.Unlock()
+	for i := 0; i < ch.pointsPerNode; i++ {
+		ch.circle.Remove(
+			int(indexedKeyHash(server, i)))
 	}
 }
 
