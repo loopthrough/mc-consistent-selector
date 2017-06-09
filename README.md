@@ -11,3 +11,7 @@ Although it should work, package was not tested in production, so please use wit
 
 * [gomemcached client](https://github.com/bradfitz/gomemcache)
 * [consistent by StatHat](https://github.com/stathat/consistent)
+
+# About
+
+Written by Ivan Jovanovic at [loopthrough GmbH](http://loopthrough.ch)
